@@ -23,3 +23,6 @@ python producer.py
 python consumer.py
 ```
 可运行多个消费者看公平调度策略，随意关停看是否有消息丢失，stop rabbitmq 队列看是否有消息丢失。
+
+## 参考
+- [rabbitmq-tutorials](https://github.com/rabbitmq/rabbitmq-tutorials/tree/main/python)
