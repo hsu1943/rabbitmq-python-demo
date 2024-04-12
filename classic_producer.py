@@ -1,7 +1,6 @@
 import json
 from typing import Union
 import pika
-import sys
 import config
 
 def send_message(message: Union[dict, list, str]):
@@ -14,12 +13,13 @@ def send_message(message: Union[dict, list, str]):
         virtual_host=config.RABBITMQ_VHOST
     ))
     channel = connection.channel()
-    # 声明一个持久化队列
-    channel.queue_declare(queue='test_queue', durable=True)
+    # 声明一个持久化经典队列
+    channel.queue_declare(queue='test_classic_queue', durable=True)
+    
     # 消息标记持久化
     channel.basic_publish(
         exchange='', 
-        routing_key='test_queue', 
+        routing_key='test_classic_queue', 
         body=msg,
         properties=pika.BasicProperties(
             delivery_mode = pika.DeliveryMode.Persistent
@@ -32,5 +32,5 @@ def send_message(message: Union[dict, list, str]):
 if __name__ == "__main__":
     # msg = ' '.join(sys.argv[1:]) or "Hello, World!"
     # send_message({"data": msg})
-    for i in range(20):
+    for i in range(10):
         send_message(f"message - {i}")
